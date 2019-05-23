@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tiger.mapper.StuMapper">
+	<resultMap type="cn.tiger.bean.Student" id="StuMap">
+			<id column="userId" property="userId"/>
+			<result column="name" property="name"/>
+			<result column="status" property="status"/>
+			<result column="degreeId" property="degreeId"/>
+			<result column="phone" property="phone"/>
+			<result column="address" property="address"/>
+			<result column="gender" property="gender"/>
+			<result column="age" property="age"/>
+			<result column="createTime" property="createTime"/>
+			<collection property="roles" ofType="cn.tiger.bean.Role">
+				<id column="role_id" property="id"/>
+				<result column="role_name" property="name"/>
+			</collection>
+			<collection property="depts" ofType="cn.tiger.bean.Dept">
+				<id column="dept_id" property="id"/>
+				<result column="dept_name" property="name"/>
+			</collection>
+	</resultMap>
+	
+	<select id="findAllStudent" resultMap="StuMap"> 
+		select students.*,roles.id as role_id,roles.name as role_name,dept.id as dept_id,dept.name as dept_name
+		from students,user_role,roles,dept,dept_user
+		where 
+			students.userId = user_role.userId and 
+			user_role.roleId = roles.id and
+			students.userId = dept_user.userId and
+			dept_user.deptId = dept.id
+	</select>
+	
+	<select id="findStudentPage" resultMap="StuMap">
+		select students.*,roles.id as role_id,roles.name as role_name,dept.id as dept_id,dept.name as dept_name
+		from students,user_role,roles,dept,dept_user
+		where 
+			students.userId = user_role.userId and 
+			user_role.roleId = roles.id and
+			students.userId = dept_user.userId and
+			dept_user.deptId = dept.id
+		ORDER BY students.userId limit #{currPage},#{pageSize}
+	</select>
+	
+	<insert id="addStudent" parameterType="cn.tiger.bean.Student">
+		insert into students(userId,name,degreeId,phone,address,gender,age)
+		value(#{userId},#{name},#{degreeId},#{phone},#{address},#{gender},#{age})
+	</insert>
+	
+	<update id="updateStudent" parameterType="cn.tiger.bean.Student">
+		update students
+		<trim prefix="SET" suffixOverrides=",">
+              <if test="name!=null">
+                  name = #{name},
+              </if>
+              <if test="status!=null">
+                  status = #{status,jdbcType=INTEGER},
+              </if>
+              <if test="degreeId!=null">
+                  degreeId = #{degreeId,jdbcType=INTEGER},
+              </if>
+              <if test="phone!=null">
+                  phone = #{phone},
+              </if>
+              <if test="address!=null">
+                  address = #{address},
+              </if>
+              <if test="gender!=null">
+                  gender = #{gender},
+              </if>
+              <if test="age=null">
+                  age = #{age},
+              </if>
+          </trim> 
+          where userId = #{userId}
+	</update>
+	<delete id="deleteStudentById">
+		delete from students where userId = #{stuId}
+	</delete>
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tiger.mapper.AuthorizeUserAndGroupsMapper">
+
+	<insert id="addPermissionsForUsers">
+		insert into user_role(roleId,userId)
+			values
+			<foreach collection="roleIds" item="roleId" separator=",">
+	            (#{roleId},#{userId})
+	        </foreach>
+	</insert>
+	
+	<delete id="deleteUserPermissions">
+		delete from user_role where userId=#{userId}
+	</delete>
+	
+	<insert id="addPermissionsForGroups">
+		insert into groups_role(roleId,groupId)
+			values
+			<foreach collection="roleIds" item="roleId" separator=",">
+	            (#{roleId},#{groupId})
+	        </foreach>
+	</insert>
+	
+	<delete id="deleteGroupPermissions">
+		delete from groups_role where groupId=#{groupId}
+	</delete>
+
+</mapper>

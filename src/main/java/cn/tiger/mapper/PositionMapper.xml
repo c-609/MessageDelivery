@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tiger.mapper.PositionMapper">
+	<resultMap type="cn.tiger.bean.Degree" id="DegreeMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="createTime" property="createTime"/>
+		<result column="status" property="status"/>
+	</resultMap>
+
+	<resultMap type="cn.tiger.bean.Position" id="PositionMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="createTime" property="createTime"/>
+		<result column="status" property="status"/>
+	</resultMap>
+	
+	<select id="findAllDegree" resultMap="DegreeMap">
+		select * from degree
+	</select>
+	
+	<insert id="addDegree" parameterType="cn.tiger.bean.Degree">
+		insert into degree(name)
+		value(#{name})
+	</insert>
+	
+	<update id="updateDegree" parameterType="cn.tiger.bean.Degree">
+		update degree
+		<trim prefix="SET" suffixOverrides=",">
+              <if test="name!=null ">
+                  name = #{name,jdbcType=VARCHAR},
+              </if>
+              <if test="status!=null">
+                  status = #{status,jdbcType=INTEGER},
+              </if>
+          </trim> 
+          	where id = #{id}
+	</update>
+	
+	<delete id="deleteDegreeById">
+		delete from degree where id = #{degreeId}
+	</delete>
+	
+	<!-- 职位  -->
+	<select id="findAllPosition" resultMap="PositionMap">
+		select * from position
+	</select>
+	
+	<insert id="addPosition" parameterType="cn.tiger.bean.Position">
+		insert into position(name)
+		value(#{name})
+	</insert>
+	
+	<update id="updatePosition" parameterType="cn.tiger.bean.Position">
+		update position
+		<trim prefix="SET" suffixOverrides=",">
+              <if test="name!=null ">
+                  name = #{name,jdbcType=VARCHAR},
+              </if>
+              <if test="status!=null">
+                  status = #{status,jdbcType=INTEGER},
+              </if>
+          </trim> 
+          	where id = #{id}
+	</update>
+	
+	<delete id="deletePositionById">
+		delete from position where id = #{positionId}
+	</delete>
+</mapper>

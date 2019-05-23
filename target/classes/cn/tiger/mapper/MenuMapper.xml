@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tiger.mapper.MenuMapper">
+
+	<resultMap type="cn.tiger.bean.Menu"  id="MenuMap">
+		<id column="menuId" property="menuId"/>
+		<result column="name" property="name"/>
+		<result column="permission" property="permission"/>
+		<result column="path" property="path"/>
+		<result column="parentId" property="parentId"/>
+		<result column="icon" property="icon"/>
+		<result column="component" property="component"/>
+		<result column="sort" property="sort"/>
+		<result column="keepAlive" property="keepAlive"/>
+		<result column="type" property="type"/>
+		<result column="createTime" property="createTime"/>
+		<result column="updateTime" property="updateTime"/>
+		<result column="delFlag" property="delFlag"/>
+		<result column="operatorId" property="operatorId"/>
+		<collection property="roles" ofType="cn.tiger.bean.Role">
+			<id column="role_id"  property="id"/>
+			<result column="role_name" property="name"/>
+			<result column="role_alias" property="alias"/>
+		</collection>
+
+	</resultMap>
+	
+	<select id="findMenuList"  resultMap="MenuMap">
+			select * from menu
+	</select>
+	
+	<select id="findMenuByUserId" resultMap="MenuMap">
+		select menu.* from menu,menu_role,roles,user_role
+		where
+			menu.menuId = menu_role.menuId and
+			menu_role.roleId = roles.id and 
+			roles.id = user_role.roleId and 
+			user_role.userId = #{uId}
+	</select>
+	
+	<select id="findMenuByRoleId" resultMap="MenuMap">
+		select menu.* from menu,menu_role
+		where
+			menu.menuId = menu_role.menuId and
+			menu_role.roleId = #{rId}
+	</select>
+	
+	<update id="updateMenu" parameterType="cn.tiger.bean.Menu">
+		update menu
+		<trim prefix="SET" suffixOverrides=",">
+              <if test="name!=null ">
+                  name = #{name,jdbcType=VARCHAR},
+              </if>
+              <if test="permission!=null">
+                  permission = #{permission},
+              </if>
+              <if test="path!=null">
+                  path = #{path},
+              </if>
+              <if test="parentId!=null">
+                  parentId = #{parentId},
+              </if>
+              <if test="icon!=null">
+                  icon = #{icon},
+              </if>
+              <if test="component!=null">
+                  component = #{component},
+              </if>
+              <if test="sort!=null">
+                  sort = #{sort},
+              </if>
+              <if test="keepAlive!=null">
+                  keepAlive = #{keepAlive},
+              </if>
+              <if test="type!=null">
+                  type = #{type},
+              </if>
+              <if test="delFlag=null">
+                  delFlag = #{delFlag},
+              </if>
+              <if test="operatorId!=null">
+                  operatorId = #{operatorId},
+              </if>
+          </trim> 
+          	where menu.menuId= #{menuId}
+	</update>
+	
+	<insert id="addMenu" parameterType="cn.tiger.bean.Menu">
+		insert into menu(menuId,name,permission,path,parentId,icon,component,sort,keepAlive,type,delFlag,operatorId)
+		value(#{menuId},#{name},#{permission},#{path},#{parentId},#{icon},#{component},#{sort},#{keepAlive},#{type},#{delFlag},#{operatorId})
+	</insert>
+	
+	<delete id="deleteMenuById">
+		delete from menu where menuId=#{mId}
+	</delete>
+	
+</mapper>
