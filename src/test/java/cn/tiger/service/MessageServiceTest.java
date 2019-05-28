@@ -6,8 +6,11 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import cn.tiger.RightsManageApplicationTest;
 import cn.tiger.bean.Message;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
-
+//@Transactional
+//@Rollback
 public class MessageServiceTest extends RightsManageApplicationTest{
 	@Autowired
 	MessageService messageService;
@@ -45,4 +48,15 @@ public class MessageServiceTest extends RightsManageApplicationTest{
 		Integer i = messageService.deleteMessageById(2);
 		System.out.println(i);
 	}
+
+	@Test
+	public void testSendMessage() {
+		Message message = new Message();
+		message.setSenderId(2);
+		message.setContent("test棒");
+		Integer[] recipientIds = {7, 8, 9};
+		Integer i = messageService.sendMessage(message, recipientIds);
+		System.out.println(i);
+	}
+
 }

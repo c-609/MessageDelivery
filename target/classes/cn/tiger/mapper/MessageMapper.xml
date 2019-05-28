@@ -50,7 +50,7 @@
 	        </foreach>
 		</insert>
 		
-		<insert id="addMessage" parameterType="cn.tiger.bean.Message">
+		<insert keyProperty="id" useGeneratedKeys="true" id="addMessage" parameterType="cn.tiger.bean.Message">
 			insert into messages(senderId,senderName,content,roleId,deptId)
 			value(#{senderId},#{senderName},#{content},#{roleId},#{deptId})
 		</insert>
