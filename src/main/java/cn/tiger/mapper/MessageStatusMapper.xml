@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tiger.mapper.MessageStatusMapper">
+    <resultMap type="cn.tiger.bean.User" id="UserMap">
+        <id column="id"  property="id"/>
+    </resultMap>
+
+    <select id="findNotReadUserByMessageId" resultMap="UserMap">
+        select users.id from users,message_state
+        where message_state.status = 0 and
+        users.id = message_state.recipientId and
+        message_state.messageId = #{messageId}
+    </select>
+
+    <select id="findReadUserByMessageId" resultMap="UserMap">
+        select users.id from users,message_state
+        where message_state.status = 1 and
+        users.id = message_state.recipientId and
+        message_state.messageId = #{messageId}
+    </select>
+
+    <insert id="addMessageStatus">
+        insert into message_state(messageId,recipientId)
+        values
+        <foreach collection="userIds" item="recipientId" separator=",">
+            (#{messageId},#{recipientId})
+        </foreach>
+    </insert>
+
+    <update id="updateMessageStatus">
+        update message_state
+        set status = 1,readintTime = #{time}
+        where messageId = #{messageId} and recipientId = #{userId}
+    </update>
+
+    <delete id="deleteMessageStatusbyMessageId">
+        delete from message_state
+        where messageId = #{messageId}
+    </delete>
+
+    <delete id="deleteMessageStatusByUserId">
+        delete from message_state
+        where messageId = #{messageId} and
+        recipientId = #{userId}
+    </delete>
+</mapper>
