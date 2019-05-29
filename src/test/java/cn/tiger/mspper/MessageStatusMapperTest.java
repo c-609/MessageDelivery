@@ -32,7 +32,7 @@ public class MessageStatusMapperTest extends RightsManageApplicationTest {
 
     @Test
     public void updateMessageStatus(){
-        Integer i = messageStatusMapper.updateMessageStatus(8,2, LocalDateTime.now());
+        Integer i = messageStatusMapper.updateMessageStatus(8,2, 1, LocalDateTime.now());
         System.out.println(i);
     }
     @Test

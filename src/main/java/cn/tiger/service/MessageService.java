@@ -1,6 +1,8 @@
 package cn.tiger.service;
 
 import java.util.List;
+
+import cn.tiger.mapper.MessageStatusMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MessageService {
 	@Autowired
-	MessageMapper messageMapper;
+	private MessageMapper messageMapper;
+	@Autowired
+    private MessageStatusMapper messageStatusMapper;
 	
 	public List<Message> getAllMessgage(){
 		return messageMapper.findAllMessage();
@@ -45,8 +49,16 @@ public class MessageService {
 		return messageMapper.updateMessage(message);
 	}
 
+    /**
+     * 删除消息以及所对应的所有的用户关系
+     * @param mid
+     * @return
+     */
 	@Transactional(rollbackFor = Exception.class)
-	public Integer deleteMessageById(Integer id) {
-		return messageMapper.deleteMessageById(id);
+	public Integer deleteMessageById(Integer mid) {
+	    // 删除用户消息关系
+        messageStatusMapper.deleteMessageStatusbyMessageId(mid);
+		return messageMapper.deleteMessageById(mid);
 	}
+
 }

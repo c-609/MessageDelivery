@@ -16,9 +16,9 @@ import cn.tiger.mapper.MenuRoleMapper;
 public class MenuService {
 	@Autowired
 	MenuMapper menuMapper;
-	
 	@Autowired
 	MenuRoleMapper menuRoleMapper;
+
 	//为菜单授权
 	public Integer authorizationForMenu(Integer[] menuIds,Integer roleId) {
 		menuRoleMapper.deleteMenuPermissions(roleId);

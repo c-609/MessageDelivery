@@ -15,7 +15,8 @@ public interface MessageStatusMapper {
 
     Integer addMessageStatus(@Param("messageId")Integer messageId,@Param("userIds") Integer[] userIds);
 
-    Integer updateMessageStatus(@Param("messageId")Integer messageId,@Param("userId")Integer userId,@Param("time") LocalDateTime time);
+    Integer updateMessageStatus(@Param("messageId")Integer messageId,@Param("userId")Integer userId,
+                                @Param("status") Integer status, @Param("time") LocalDateTime time);
 
     Integer deleteMessageStatusbyMessageId(@Param("messageId")Integer messageId);
 

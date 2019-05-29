@@ -31,7 +31,7 @@
 
     <update id="updateMessageStatus">
         update message_state
-        set status = 1,readintTime = #{time}
+        set status = #{status},readintTime = #{time}
         where messageId = #{messageId} and recipientId = #{userId}
     </update>
 
