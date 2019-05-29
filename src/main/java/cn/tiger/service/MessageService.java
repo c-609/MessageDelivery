@@ -21,8 +21,8 @@ public class MessageService {
 		return messageMapper.findAllMessage();
 	}
 	
-	public List<Message> getMessageByUserId(Integer userId){
-		return messageMapper.findMessageByUserId(userId);
+	public List<Message> getMessageByUserId(Integer userId, Integer status){
+		return messageMapper.findMessageByUserId(userId, status);
 	}
 
 	/**

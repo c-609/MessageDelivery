@@ -26,4 +26,24 @@ public class MessageStatusService {
     public Integer updateMessageStatus(Integer messageId, Integer status) {
         return messageStatusMapper.updateMessageStatus(messageId, SecurityUtils.getUser().getId(), status, LocalDateTime.now());
     }
+
+    /**
+     * 查看未读消息
+     * @param mid
+     * @return
+     */
+    public List<User> findNotReadUserByMessageId(Integer mid) {
+        return messageStatusMapper.findNotReadUserByMessageId(mid);
+    }
+
+    /**
+     * 查看已读消息
+     * @param mid
+     * @return
+     */
+    public List<User> findReadUserByMessageId(Integer mid) {
+        return messageStatusMapper.findReadUserByMessageId(mid);
+    }
+
+
 }

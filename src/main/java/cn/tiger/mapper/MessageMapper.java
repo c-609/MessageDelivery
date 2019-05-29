@@ -12,7 +12,7 @@ import cn.tiger.bean.Message;
 public interface MessageMapper {
 	List<Message> findAllMessage();
 	
-	List<Message> findMessageByUserId(@Param("userId") Integer userId);//--------------------
+	List<Message> findMessageByUserId(@Param("userId") Integer userId, @Param("stauts") Integer status);//--------------------
 	//发消息
 	Integer sendMessage(@Param("messageId")Integer messageId,@Param("recipientIds")Integer[] recipientIds);//------发消息
 	

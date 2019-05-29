@@ -1,6 +1,7 @@
 package cn.tiger.controller.msg;
 
 import cn.tiger.bean.Message;
+import cn.tiger.common.core.util.CommonConstants;
 import cn.tiger.common.core.util.R;
 import cn.tiger.security.util.SecurityUtils;
 import cn.tiger.service.MessageService;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 消息管理 前端控制类
@@ -31,8 +33,11 @@ public class MessageController {
      */
     @GetMapping
     public R getUserMessage() {
+        List<Message> messageList = messageService.getMessageByUserId(SecurityUtils.getUser().getId(), 0);
+        // 去除已读的消息 filter中，判断为true则保留
+        messageList.stream().filter(message -> (CommonConstants.MESSAGE_STATUS_READER) != message.getStatus());
         // TODO 需要把自己发的除外
-        return new R(messageService.getMessageByUserId(SecurityUtils.getUser().getId()));
+        return new R(messageService.getMessageByUserId(SecurityUtils.getUser().getId(), 0));
     }
 
     public R getMessage() {
@@ -41,14 +46,26 @@ public class MessageController {
     }
 
     /**
-     * 当用户点击进消息的时候，可发送此请求
-     * 通过id查询用户列表
+     * 获取未读用户列表
      * @return
      */
-    @GetMapping("/{id")
-    public R getByUserList(@PathVariable Integer id) {
+    @GetMapping("/{mid}")
+    public R getByUserList(@PathVariable Integer mid) {
+        return new R(messageStatusService.findNotReadUserByMessageId(mid));
+    }
 
-        return new R();
+    /**
+     * 获取用户读取比例
+     * @param mid
+     * @return
+     */
+    @GetMapping("/proportion/{mid}")
+    public R getReadProportion(@PathVariable Integer mid) {
+        StringBuffer sb = new StringBuffer();
+        int haveRead = messageStatusService.findReadUserByMessageId(mid).size();
+        int unread = messageStatusService.findNotReadUserByMessageId(mid).size();
+        sb.append(haveRead + "/" + (haveRead + unread));
+        return new R(sb.toString());
     }
 
     /**
@@ -56,7 +73,7 @@ public class MessageController {
      * @param mid 消息id 0:未读 1：以读 -1：删除
      * @return
      */
-    @PutMapping("/edit_state")
+    @PostMapping("/edit_state")
     public R updateMessageState(Integer mid, Integer status) {
         return new R<>(messageStatusService.updateMessageStatus(mid, status));
     }

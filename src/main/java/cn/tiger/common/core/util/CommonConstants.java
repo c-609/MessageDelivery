@@ -68,4 +68,20 @@ public interface CommonConstants {
          * 未知错误
          */
         Integer UNKNOWN_EXCEPTION = -99;
+
+        /**
+         * 消息状态 未读
+         */
+        Integer MESSAGE_STATUS_NOT_READER = 0;
+
+        /**
+         * 消息状态 已读
+         */
+        Integer MESSAGE_STATUS_READER = 1;
+
+        /**
+         * 消息状态 删除
+         */
+        Integer MESSAGE_STATUS_DEL = -1;
+
 }

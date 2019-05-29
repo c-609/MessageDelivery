@@ -39,7 +39,8 @@
 			where messages.senderId = users.Id and
 			messages.roleId = roles.id and
 			messages.deptId = dept.id and
-			messages.senderId=#{userId}
+			messages.senderId=#{userId} and
+			messages.status=#{stauts}
 		</select>
 		
 		<insert id="sendMessage">

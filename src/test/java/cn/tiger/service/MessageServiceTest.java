@@ -22,7 +22,7 @@ public class MessageServiceTest extends RightsManageApplicationTest{
 	
 	@Test
 	public void testGetMessageByUserid() {
-		List list = messageService.getMessageByUserId(1);
+		List list = messageService.getMessageByUserId(1, 0);
 		System.out.println(list);
 	}
 	
