@@ -13,6 +13,8 @@ import cn.tiger.bean.User;
 public class RoleServiceTest extends RightsManageApplicationTest{
 	@Autowired
 	RoleService roleService;
+
+
 	@Test
 	public void testGetAllRole() {
 		List<Role> list = roleService.getAllRole();

@@ -17,12 +17,14 @@ public class MessageServiceTest extends RightsManageApplicationTest{
 	@Test
 	public void testGetAllMessage() {
 		List list = messageService.getAllMessgage();
+		Message message = (Message) list.get(0);
+		System.out.println(message.getTime());
 		System.out.println(list);
 	}
 	
 	@Test
 	public void testGetMessageByUserid() {
-		List list = messageService.getMessageByUserId(1, 0);
+		List list = messageService.getMessageByUserId(0);
 		System.out.println(list);
 	}
 	

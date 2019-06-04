@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tiger.mapper.MessageMapper">
 
 	<resultMap type="cn.tiger.bean.Message"  id="MessageMap">
 		<id column="id"  property="id"/>
 		<result column="senderId" property="senderId"/>
 		<result column="senderName" property="senderName"/>
+		<result column="title" property="title"/>
 		<result column="time" property="time"/>
 		<result column="status" property="status"/>
 		<result column="content" property="content"/>
@@ -24,63 +25,78 @@
 			<result column="dept_name" property="name"/>
 		</association>
 	</resultMap>
-		
-		<select id="findAllMessage" resultMap="MessageMap">
-			select messages.*,roles.id as role_id,roles.name as role_name,dept.id as dept_id,dept.name as dept_name
-			from messages,users,roles,dept
-			where messages.senderId = users.Id and
+
+	<select id="findAllMessage" resultMap="MessageMap">
+		select messages.*,roles.id as role_id,roles.name as role_name,dept.id as dept_id,dept.name as dept_name
+		from messages,users,roles,dept
+		where messages.senderId = users.Id and
 			messages.roleId = roles.id and
 			messages.deptId = dept.id
-		</select>
-		
-		<select id="findMessageByUserId" resultMap="MessageMap">
-			select messages.*,roles.id as role_id,roles.name as role_name,dept.id as dept_id,dept.name as dept_name
-			from messages,users,roles,dept
-			where messages.senderId = users.Id and
+	</select>
+
+	<select id="findMessageByRecipientId" resultMap="MessageMap">
+		select messages.*,roles.id as role_id,roles.name as role_name,dept.id as dept_id,dept.name as dept_name
+		from messages,users,roles,dept,message_state
+		where messages.senderId = users.Id and
+			messages.roleId = roles.id and
+			messages.deptId = dept.id and
+			messages.id = message_state.messageId and
+			message_state.recipientId = #{recipientId} and
+			message_state.status = #{status}
+	</select>
+
+
+	<select id="findMessageByUserId" resultMap="MessageMap">
+		select messages.*,roles.id as role_id,roles.name as role_name,dept.id as dept_id,dept.name as dept_name
+		from messages,users,roles,dept
+		where messages.senderId = users.Id and
 			messages.roleId = roles.id and
 			messages.deptId = dept.id and
 			messages.senderId=#{userId}
-		</select>
-		
-		<insert id="sendMessage">
-			insert into message_state(messageId,recipientId)
-			values
-			<foreach collection="recipientIds" item="recipientId" separator=",">
-	            (#{messageId},#{recipientId})
-	        </foreach>
-		</insert>
-		
-		<insert keyProperty="id" useGeneratedKeys="true" id="addMessage" parameterType="cn.tiger.bean.Message">
-			insert into messages(senderId,senderName,content,roleId,deptId)
-			value(#{senderId},#{senderName},#{content},#{roleId},#{deptId})
-		</insert>
-		
-		<update id="updateMessage" parameterType="cn.tiger.bean.Message">
-			update messages
-			<trim prefix="SET" suffixOverrides=",">
+	</select>
+
+	<insert id="sendMessage">
+		insert into message_state(messageId,recipientId)
+		values
+		<foreach collection="recipientIds" item="recipientId" separator=",">
+			(#{messageId},#{recipientId})
+		</foreach>
+	</insert>
+
+	<insert keyProperty="id" useGeneratedKeys="true" id="addMessage" parameterType="cn.tiger.bean.Message">
+		insert into messages(senderId,senderName,title,content,roleId,deptId)
+			value(#{senderId},#{senderName},#{title},#{content},#{roleId},#{deptId})
+	</insert>
+
+	<update id="updateMessage" parameterType="cn.tiger.bean.Message">
+		update messages
+		<trim prefix="SET" suffixOverrides=",">
 			<if test="senderId!=null ">
-                  senderId = #{senderId},
-              </if>
-              <if test="senderName!=null ">
-                  senderName = #{senderName},
-              </if>
-              <if test="content!=null ">
-                  content = #{content,jdbcType=VARCHAR},
-              </if>
-              <if test="status!=null">
-                  status = #{status,jdbcType=INTEGER},
-              </if>
-              <if test="roleId!=null">
-                  roleId = #{roleId,jdbcType=INTEGER},
-              </if>
-              <if test="deptId!=null">
-                  deptId = #{deptId,jdbcType=INTEGER},
-              </if>
-          </trim> 
-          	where messages.id = #{id}
-		</update>
-		
-		<delete id="deleteMessageById">
-			delete from messages where id = #{id}
-		</delete>
+				senderId = #{senderId},
+			</if>
+			<if test="senderName!=null ">
+				senderName = #{senderName},
+			</if>
+			<if test="title!=null ">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="content!=null ">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="status!=null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="roleId!=null">
+				roleId = #{roleId,jdbcType=INTEGER},
+			</if>
+			<if test="deptId!=null">
+				deptId = #{deptId,jdbcType=INTEGER},
+			</if>
+		</trim>
+		where messages.id = #{id}
+	</update>
+
+	<delete id="deleteMessageById">
+		delete from messages where id = #{id}
+	</delete>
 </mapper>

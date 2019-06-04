@@ -5,8 +5,7 @@ import cn.tiger.common.core.util.R;
 import cn.tiger.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 接发消息控制类
@@ -20,13 +19,14 @@ public class ProcessController {
     MessageService messageService;
 
     /**
-     * 发送消息
-     * @param message
+     * 发送消息， 群发
+     * @param message 消息
+     * @param deptIds 部门ids
      * @return
      */
-    @RequestMapping("/send")
-    public R send(Message message, Integer[] recipientIds) {
-        return new R(messageService.sendMessage(message, recipientIds));
+    @PostMapping("/send")
+    public R send(Message message, Integer[] deptIds) {
+        return new R(messageService.sendMessage(message, deptIds));
     }
 
 }

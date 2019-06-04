@@ -1,6 +1,7 @@
 package cn.tiger.security.sevice;
 
 import cn.tiger.bean.User;
+import cn.tiger.common.core.constant.SecurityConstants;
 import cn.tiger.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,9 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * create by yifeng
@@ -43,13 +42,16 @@ public class TigerUserDetailServiceImpl implements UserDetailsService {
         user.getDepts().stream().forEach(dept -> {
             deptIds.add(dept.getId());
         });
+        List<Integer> roleIds = new ArrayList<>();
+        user.getRoles().stream().forEach(role -> {
+            roleIds.add(role.getId());
+        });
         // TODO 此处应放入roleIds，参照pig,在SecurityUtils中取出
         Collection<? extends GrantedAuthority> authorities
                 = AuthorityUtils.createAuthorityList("ROLE_ADMIN");
 
-
         // 构造security用户
-        return new TigerUser(user.getId(), deptIds, user.getUsername(), user.getPassword(),
+        return new TigerUser(user.getId(), deptIds, roleIds, user.getUsername(), user.getPassword(),
                 true, true, true, true, authorities);
     }
 

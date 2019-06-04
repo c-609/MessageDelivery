@@ -2,6 +2,7 @@ package cn.tiger.mapper;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +12,7 @@ import cn.tiger.bean.Teacher;
 import cn.tiger.bean.User;
 
 @Mapper
-public interface DeptMapper {
+public interface DeptMapper extends BaseMapper<Dept> {
 	List<Dept> findDeptList();
 	
 	Integer addDept(Dept dept);

@@ -1,5 +1,7 @@
 package cn.tiger.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,21 @@ import cn.tiger.mapper.RoleMapper;
 public class RoleService {
 	@Autowired
 	RoleMapper roleMapper;
-	
+
+	/**
+	 * 获取角色列表
+	 * @param ids
+	 * @return
+	 */
+	public List<Role> listByRids(Integer[] ids) {
+		roleMapper.selectById(ids[0]);
+		List<Role> roleList = new ArrayList<>();
+		Arrays.stream(ids).forEach(id -> {
+			roleList.add(roleMapper.selectById(id));
+		});
+		return roleList;
+	}
+
 	public List<Role> getAllRole(){
 		return roleMapper.findAllRole();
 	}

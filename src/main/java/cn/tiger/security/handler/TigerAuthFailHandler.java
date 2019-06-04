@@ -29,10 +29,10 @@ public class TigerAuthFailHandler implements AuthenticationFailureHandler {
         resp.setStatus(401);
         R resultBean = new R();
         resultBean.setCode(CommonConstants.FAIL);
-        resultBean.setMsg("fail");
         if (e instanceof BadCredentialsException ||
                 e instanceof UsernameNotFoundException) {
             resultBean.setCode(CommonConstants.USERNAME_OR_PASSWORD_NON);
+            resultBean.setMsg("用户名或密码错误");
         }
         else if (e instanceof LockedException) {
             resultBean.setCode(Integer.getInteger(CommonConstants.STATUS_LOCK));

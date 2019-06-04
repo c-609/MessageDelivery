@@ -70,18 +70,37 @@ public interface CommonConstants {
         Integer UNKNOWN_EXCEPTION = -99;
 
         /**
-         * 消息状态 未读
+         * 用户消息状态 未读
          */
-        Integer MESSAGE_STATUS_NOT_READER = 0;
+        Integer USER_MESSAGE_STATUS_NOT_READER = 0;
 
         /**
-         * 消息状态 已读
+         * 用户消息状态 已读
          */
-        Integer MESSAGE_STATUS_READER = 1;
+        Integer USER_MESSAGE_STATUS_READER = 1;
 
         /**
-         * 消息状态 删除
+         * 用户消息状态 删除
          */
-        Integer MESSAGE_STATUS_DEL = -1;
+        Integer USER_MESSAGE_STATUS_DEL = -1;
+
+        /**
+         * 消息状态 正常
+         */
+        Integer MESSAGE_STATUS_NORMAL = 0;
+
+        /**
+         * 消息状态 过期
+         */
+        Integer MESSAGE_STATUS_NOT_NORMAL = 1;
+
+        /**
+         * 部门类型 ：学生
+         */
+        Integer DEPT_TYPE_STUDENT = 1;
+        /**
+         * 部门类型 ：老师
+         */
+        Integer DEPT_TYPE_TEACHER = 2;
 
 }

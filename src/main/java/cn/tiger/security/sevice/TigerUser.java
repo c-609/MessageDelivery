@@ -26,6 +26,12 @@ public class TigerUser extends User {
     private List<Integer> deptList;
 
     /**
+     * 角色id
+     */
+    @Getter
+    private List<Integer> roleList;
+
+    /**
      * Construct the <code>User</code> with the details required by
      * {@link org.springframework.security.authentication.dao.DaoAuthenticationProvider}.
      *
@@ -46,11 +52,12 @@ public class TigerUser extends User {
      * @throws IllegalArgumentException if a <code>null</code> value was passed either as
      * a parameter or as an element in the <code>GrantedAuthority</code> collection
      */
-    public TigerUser(Integer id, List<Integer> deptList, String username, String password, boolean enabled, boolean accountNonExpired,
+    public TigerUser(Integer id, List<Integer> deptList, List<Integer> roleList, String username, String password, boolean enabled, boolean accountNonExpired,
                      boolean credentialsNonExpired, boolean accountNonLocked,
                      Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
         this.deptList = deptList;
+        this.roleList = roleList;
     }
 }

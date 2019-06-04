@@ -31,7 +31,7 @@ public class UserServiceTest extends RightsManageApplicationTest{
     }
     @Test
     public void testGetUesrByUsername() {
-       User user = userService.getUserByUsername("student1");
+       User user = userService.getUserByUsername("teacher1");
         System.out.println(user);
     }
     

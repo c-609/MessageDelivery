@@ -1,15 +1,16 @@
 package cn.tiger.mapper;
 
-import java.util.List;
-
+import cn.tiger.bean.Role;
+import cn.tiger.bean.User;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import lombok.EqualsAndHashCode;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import cn.tiger.bean.Role;
-import cn.tiger.bean.User;
+import java.util.List;
 
 @Mapper
-public interface RoleMapper {
+public interface RoleMapper extends BaseMapper<Role> {
 	List<Role> findAllRole();
 	
 	Integer addRole(Role role);

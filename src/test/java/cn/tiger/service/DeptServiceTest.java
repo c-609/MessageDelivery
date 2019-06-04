@@ -49,4 +49,10 @@ public class DeptServiceTest extends RightsManageApplicationTest{
 		List list = deptService.getTeacherByDeptid(16);
 		System.out.println(list);
 	}
+
+	@Test
+	public void testListDeptTree() {
+		List tree = deptService.listDeptTree();
+		System.out.println(tree);
+	}
 }

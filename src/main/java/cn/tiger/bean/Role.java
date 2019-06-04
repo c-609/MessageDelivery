@@ -1,57 +1,31 @@
 package cn.tiger.bean;
 
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.Date;
 
-public class Role {
+@Data
+@TableName("roles")
+@EqualsAndHashCode (callSuper = true)
+public class Role extends Model<Role> {
+	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
 	private String name;
 	private String alias;//别名 ROLE_name
+    @TableField("createTime")
 	private Date createTime;
+    @TableField("updateTime")
 	private Date updateTime;
+    @TableField("operatorId")
 	private Integer operatorId;
 	private Integer status;
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getAlias() {
-		return alias;
-	}
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	public Integer getOperatorId() {
-		return operatorId;
-	}
-	public void setOperatorId(Integer operatorId) {
-		this.operatorId = operatorId;
-	}
-	public Integer getStatus() {
-		return status;
-	}
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-	
+
 	
 }
