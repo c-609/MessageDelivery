@@ -46,7 +46,7 @@ public class MessageController {
             @Override
             public Message edit(Message message) {
                 for (Integer id : presenceIds) {
-                    if (message.getId().equals(id)) {
+                    if (id.equals(message.getId())) {
                         return null;
                     }
                 }

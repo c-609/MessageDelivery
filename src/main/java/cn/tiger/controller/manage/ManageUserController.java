@@ -34,4 +34,6 @@ public class ManageUserController {
             return new R(deptService.getTeacherByDeptid(deptId));
         }
     }
+
+
 }

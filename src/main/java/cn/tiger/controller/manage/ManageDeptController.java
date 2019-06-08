@@ -27,4 +27,9 @@ public class ManageDeptController {
         return new R(deptService.listDeptTree());
     }
 
+    @GetMapping("/list")
+    public R getByDept(Integer[] dids) {
+        return new R(deptService.getListByIds(dids));
+    }
+
 }

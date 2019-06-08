@@ -1,6 +1,7 @@
 package cn.tiger.mspper;
 
 import cn.tiger.RightsManageApplicationTest;
+import cn.tiger.bean.DeptUser;
 import cn.tiger.bean.Role;
 import cn.tiger.mapper.RoleMapper;
 import org.junit.Test;
@@ -20,4 +21,5 @@ public class RoleMapperTest extends RightsManageApplicationTest {
 //        role.selectOne(1);
         System.out.println(roleMapper.selectById(1));
     }
+
 }

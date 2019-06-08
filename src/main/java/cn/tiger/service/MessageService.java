@@ -72,6 +72,7 @@ public class MessageService {
 		Set<Integer> newSet = set.stream().filter(id -> !id.equals(SecurityUtils.getUser().getId())).collect(Collectors.toSet());
 		// 消息体
 		messageMapper.addMessage(message);
+//		messageMapper.insert(message);
 		// 用户消息关联
 		return messageMapper.sendMessage(message.getId(),  set.toArray(new Integer[newSet.size()]));
 	}

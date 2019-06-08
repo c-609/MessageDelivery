@@ -2,6 +2,7 @@ package cn.tiger.service;
 
 import java.util.List;
 
+import cn.tiger.bean.DeptUser;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,5 +49,12 @@ public class RoleServiceTest extends RightsManageApplicationTest{
 	public void tesGetUserByRoleId() {
 		List<User> list = roleService.getUserByRoleId(1);
 		System.out.println(list);
+	}
+
+	@Test
+	public void testListByDeptUser() {
+		DeptUser deptUser = new DeptUser();
+		deptUser.setUserId(1);
+		System.out.println(roleService.listByDeptUser(deptUser));
 	}
 }

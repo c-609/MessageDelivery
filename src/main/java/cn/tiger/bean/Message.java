@@ -18,7 +18,7 @@ public class Message extends Model<Message> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@TableId
-	private Integer id;
+	private int id;
 	@TableField("senderId")
 	private Integer senderId;
 	@TableField("senderName")

@@ -64,8 +64,8 @@
 	</insert>
 
 	<insert keyProperty="id" useGeneratedKeys="true" id="addMessage" parameterType="cn.tiger.bean.Message">
-		insert into messages(senderId,senderName,title,content,roleId,deptId)
-			value(#{senderId},#{senderName},#{title},#{content},#{roleId},#{deptId})
+		insert into messages(senderId,senderName,title,content,roleId,deptId,number)
+			value(#{senderId},#{senderName},#{title},#{content},#{roleId},#{deptId},#{number})
 	</insert>
 
 	<update id="updateMessage" parameterType="cn.tiger.bean.Message">

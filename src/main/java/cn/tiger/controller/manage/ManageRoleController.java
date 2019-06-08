@@ -1,5 +1,6 @@
 package cn.tiger.controller.manage;
 
+import cn.tiger.bean.DeptUser;
 import cn.tiger.common.core.util.R;
 import cn.tiger.service.RoleService;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 角色
  * create by yifeng
  */
 @RestController
@@ -27,5 +29,16 @@ public class ManageRoleController {
     @GetMapping
     public R getListByRids(Integer[] ids) {
         return new R(roleService.listByRids(ids));
+    }
+
+    /**
+     * 获取角色列表
+     * 根据部门用户关系
+     * @param deptUser 部门用户关系
+     * @return
+     */
+    @GetMapping("/list/dept_user")
+    public R listByDeptUser(DeptUser deptUser) {
+        return new R(roleService.listByDeptUser(deptUser));
     }
 }
